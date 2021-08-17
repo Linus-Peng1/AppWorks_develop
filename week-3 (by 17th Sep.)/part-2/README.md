@@ -16,10 +16,3 @@ We should only allow the last one to access our 3 admin pages.
 * **/admin/product.html** for product management.
 * **/admin/campaign.html** for campaign management.
 * **/admin/checkout.html** for check out testing.
-
-## More AWS services (Advanced Optional)
-If we want to traffic our user requests into multiple server nodes in the future, we should move some services from the original server to a shared data center so that we can maintain the data more easily.
-1. Move your redis server to `AWS ElastiCache` (Note: choose `t2.micro` node and 0 replica)
-2. Send your server logs to `AWS CloudWatch Log Group`
-
-Note: A good back-end engineer should learn how to write meaningful server logs. As a begineer, you can use `morgan-body` library to help you and see what it do.

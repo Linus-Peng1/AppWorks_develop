@@ -18,10 +18,6 @@ Follow the logics below to build a cache mechanism:
 
 Similar procedure described above, we can add cache mechanism for **Product Details API** to cache product details for the requests which send the same product id.
 
-## Rate limiter (Advanced Optional)
-
-Sometimes, there will be malicious users who attack (or crawl) our website by firing thousands of requests within a short time window and crash your server. 
-
-We can build a `rate limiter` to prevent this kind of attacks. The basic idea is tracking the `ip` of each requests and only allow each ip address to request our website `N` times within `M` seconds. How to choose N, M properly is a hard question, but let's set them to be `N=10` and `M=1` for practice today.
-
-You can set smaller `N` for manual testing.
+## Advanced Optional
+1. Try to understand Cache mechanism in general.
+2. Figure out why Redis can improve the performance. What's the differencee between Memory and Disk.
