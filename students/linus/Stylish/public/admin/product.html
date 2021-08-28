@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <header>
+    <h1>新增商品</h1>
+  </header>
+  <div class="container">
+    <form class="needs-validate" id="form" action="/createProduct" method="POST" novalidate>
+      <div class="form-group">
+        <label for="title">商品名稱</label>
+        <input class="form-control" type="text" name="title" placeholder="請輸入商品名稱 ..." required>
+      </div>
+      <div class="form-group">
+        <label for="description">商品描述</label>
+        <input class="form-control" type="text" name="description" placeholder="請輸入商品描述 ..." required>
+      </div>
+      <div class="form-group">
+        <label for="price">商品價格</label>
+        <input class="form-control" type="int" name="price" placeholder="請輸入商品價格 ..." required>
+      </div>
+      <div class="form-group">
+        <label for="texture">商品成分</label>
+        <input class="form-control" type="text" name="texture" placeholder="請輸入商品成分 ..." required>
+      </div>
+      <div class="form-group">
+        <label for="wash">商品清潔</label>
+        <input class="form-control" type="text" name="wash" placeholder="請輸入商品清潔 ..." required>
+      </div>
+      <div class="form-group">
+        <label for="place">商品產地</label>
+        <input class="form-control" type="text" name="place" placeholder="請輸入商品產地 ..." required>
+      </div>
+      <div class="form-group">
+        <label for="note">商品註解</label>
+        <input class="form-control" type="text" name="note" placeholder="請輸入商品註解 ..." required>
+      </div>
+      <div class="form-group">
+        <label for="story">商品推銷</label>
+        <input class="form-control" type="text" name="story" placeholder="請輸入商品推銷 ..." required>
+      </div>
+
+
+      <div>
+        <label for="color">顏色:</label>
+        <select name="color">
+          <option value="darkblue">深藍</option>
+          <option value="saab">白色</option>
+          <option value="pink">粉紅</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="size">尺寸:</label>
+        <select name="size">
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="count">商品數量</label>
+        <input class="form-control" type="int" name="count" placeholder="請輸入商品數量 ..." required>
+      </div>
+
+      <button id="submit-btn" type="submit">新增</button>
+    </form>
+
+    <form action="/uploadSingle" method="POST" enctype="multipart/form-data">
+      <label for="img">選擇主要圖檔:</label>
+      <input type="file" name="mainImage">
+      <input type="submit">
+    </form>
+
+    <form action="/uploadMultiple" method="POST" enctype="multipart/form-data">
+      <label for="img">選擇其他圖檔:</label>
+      <input type="file" name="otherImage">
+      <input type="file" name="otherImage">
+      <input type="file" name="otherImage">
+      <input type="submit">
+    </form>
+
+  </div>
+</body>
+
+</html>
