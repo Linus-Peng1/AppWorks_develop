@@ -61,21 +61,21 @@ const upload = multer({
 
 const cpUpload = upload.fields([{ name: 'mainImage', maxCount: 1 }, { name: 'otherImage', maxCount: 3 }])
 app.post('/createProduct', cpUpload, (req, res) => {
-  const { title, description, price, texture, wash, place, note, story, color, size } = req.body
-  console.log(req.body)
-  console.log('----------------')
-
+  let { title, description, price, texture, wash, place, note, story, color, size } = req.body
+  price = parseInt(price)
   let mainImage = req.files['mainImage'][0].path
-  console.log(mainImage)
-  console.log('----------------')
-
   let otherImages = []
-  let otherImagesPath = req.files['otherImage']
-  otherImagesPath.forEach(image => {
-    otherImages.push(image.path)
-  })
-  console.log(otherImages)
 
+  req.files['otherImage'].forEach(image => {
+    otherImages.push('image.path', image.path)
+  })
+
+  const Productvalues = { title, description, price, texture, wash, place, note, story, main_image: mainImage }
+  const Productsql = 'insert into products set ?'
+  db.query(Productsql, Productvalues, (err, result) => {
+    if (err) console.log(err)
+    console.log(result)
+  })
   res.send('done')
 })
 
