@@ -18,10 +18,19 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 const db = mysql.createConnection({
-  host: "localhost", // public ip
-  user: process.env.MYSQL_USER,
+  // locaol
+  host: process.env.MYSQL_HOSTNAME,
+  user: process.env.MYSQL_USERNAME,
   password: process.env.MYSQL_PASSWORD,
-  database: "stylish"
+  database: process.env.MYSQL_DATABASE,
+
+  // // EC2
+  // host: process.env.RDS_HOSTNAME,
+  // user: process.env.RDS_USERNAME,
+  // password: process.env.RDS_PASSWORD,
+  // database: process.env.RDS_DATABASE,
+
+  multipleStatements: true
 })
 
 // db Connect
@@ -80,5 +89,5 @@ app.post('/createProduct', cpUpload, (req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log('Server running on port 3000')
+  console.log(`Server running on port ${PORT}`)
 })
