@@ -18,7 +18,7 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 const db = mysql.createConnection({
-  host: "localhost",
+  host: "localhost", // public ip
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: "stylish"
@@ -30,44 +30,53 @@ db.connect((err) => {
   console.log('MySql Connected')
 })
 
-// upload image 
-// set Storage Engine
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './public/uploads')
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname))
-  }
-})
-
-// init Upload
-const upload = multer({ storage: fileStorage })
-
 // routes
 app.get('/', (req, res) => {
   res.render('index')
 })
 
-// upload product image
-app.post('/uploadSingle', upload.single('mainImage'), (req, res) => {
-  console.log(req.file)
-  res.send('Single File upload success')
-})
-
-app.post('/uploadMultiple', upload.array('otherImage', 3), (req, res) => {
-  console.log(req.files)
-  res.send('Multiple Files upload success')
-})
-
 // create product
-app.post('/createProduct', (req, res) => {
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname + path.extname(file.originalname))
+  }
+})
+
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true)
+  } else {
+    cb(null, false)
+  }
+}
+
+const upload = multer({
+  storage: fileStorage,
+  fileFilter: fileFilter
+})
+
+const cpUpload = upload.fields([{ name: 'mainImage', maxCount: 1 }, { name: 'otherImage', maxCount: 3 }])
+app.post('/createProduct', cpUpload, (req, res) => {
   const { title, description, price, texture, wash, place, note, story, color, size } = req.body
+  console.log(req.body)
+  console.log('----------------')
 
-  const inputData = req.body
-  console.log('input data: ', inputData)
+  let mainImage = req.files['mainImage'][0].path
+  console.log(mainImage)
+  console.log('----------------')
 
-  res.send('create product success')
+  let otherImages = []
+  let otherImagesPath = req.files['otherImage']
+  otherImagesPath.forEach(image => {
+    otherImages.push(image.path)
+  })
+  console.log(otherImages)
+
+  res.send('done')
 })
 
 app.listen(PORT, () => {
